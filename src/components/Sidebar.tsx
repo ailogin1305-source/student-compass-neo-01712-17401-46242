@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, BarChart3, Calendar, Upload, X } from "lucide-react";
+import { LayoutDashboard, Users, BarChart3, Calendar, Upload, X, LineChart } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -63,6 +63,18 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                 {item.label}
               </NavLink>
             ))}
+            
+            {/* Data Analysis External Link */}
+            <a
+              href="https://colab.research.google.com/drive/1XmpwNGZCLSxLI1_6laEU9BpI-IwTSDty#scrollTo=pZsLJXsYPb-M"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClose}
+              className="flex items-center gap-3 px-4 py-3 border-4 border-black font-bold uppercase text-sm transition-all bg-white hover:bg-muted"
+            >
+              <LineChart className="h-5 w-5" />
+              Data Analysis
+            </a>
           </nav>
         </div>
       </aside>
