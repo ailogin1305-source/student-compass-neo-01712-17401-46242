@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, BarChart3, Calendar, Upload, X, LineChart, Brain } from "lucide-react";
+import { LayoutDashboard, Users, BarChart3, Calendar, Upload, X, LineChart, Brain, FileText } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -87,6 +87,23 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               <Brain className="h-5 w-5" />
               Prediction
             </a>
+            
+            {/* PDF Analysis Link */}
+            <NavLink
+              to="/pdf-analysis"
+              onClick={onClose}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-3 px-4 py-3 border-4 border-black font-bold uppercase text-sm transition-all",
+                  isActive
+                    ? "bg-secondary text-foreground"
+                    : "bg-white hover:bg-muted"
+                )
+              }
+            >
+              <FileText className="h-5 w-5" />
+              PDF Analysis
+            </NavLink>
           </nav>
         </div>
       </aside>

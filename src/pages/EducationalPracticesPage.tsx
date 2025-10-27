@@ -91,7 +91,7 @@ const EducationalPracticesPage = () => {
                 <div>
                   <h4 className="text-xl font-bold mb-2 text-foreground">Bridging the Digital Divide</h4>
                   <p className="text-muted-foreground text-lg">
-                    No more "digital divide" where only well-funded urban schools can access cutting-edge educational technology. Sparsh Mukthi runs on affordable hardware and works seamlessly in low-bandwidth or no-bandwidth environments, making world-class education truly accessible.
+                    No more "digital divide" where only well-funded urban schools can access cutting-edge educational technology. Dropout Detector runs on affordable hardware and works seamlessly in low-bandwidth or no-bandwidth environments, making world-class education truly accessible.
                   </p>
                 </div>
                 <div>
@@ -138,7 +138,7 @@ const EducationalPracticesPage = () => {
                 <div>
                   <h4 className="text-xl font-bold mb-2 text-foreground">Universal Design for Learning (UDL)</h4>
                   <p className="text-muted-foreground text-lg">
-                    Following UDL principles, Sparsh Mukthi provides multiple means of representation, action, expression, and engagement. Every student can access content in the way that works best for them, ensuring no one is disadvantaged by rigid, one-size-fits-all approaches.
+                    Following UDL principles, Dropout Detector provides multiple means of representation, action, expression, and engagement. Every student can access content in the way that works best for them, ensuring no one is disadvantaged by rigid, one-size-fits-all approaches.
                   </p>
                 </div>
               </CardContent>

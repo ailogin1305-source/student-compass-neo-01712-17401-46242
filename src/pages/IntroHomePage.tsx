@@ -15,7 +15,7 @@ const IntroHomePage = () => {
         <div className="container mx-auto h-full px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Shield className="h-8 w-8 text-foreground" />
-            <h1 className="text-2xl font-bold text-foreground">SPARSH MUKTHI</h1>
+            <h1 className="text-2xl font-bold text-foreground">DROPOUT DETECTOR</h1>
           </div>
           <Button className="bg-secondary text-foreground border-4 border-black hover:bg-secondary/90 font-bold" asChild>
             <Link to="/login">
@@ -65,7 +65,7 @@ const IntroHomePage = () => {
       {/* Our Solution Section */}
       <section className="py-20 px-6">
         <div className="container mx-auto">
-          <h2 className="text-5xl font-bold mb-4 text-center text-foreground">Meet Sparsh Mukthi: The Future of Interaction</h2>
+          <h2 className="text-5xl font-bold mb-4 text-center text-foreground">Meet Dropout Detector: The Future of Interaction</h2>
           <p className="text-xl text-muted-foreground mb-12 text-center max-w-3xl mx-auto">
             A revolutionary platform that combines AI-powered content generation with natural, touchless interaction
           </p>
@@ -275,7 +275,7 @@ const IntroHomePage = () => {
       {/* Footer */}
       <footer className="border-t-4 border-black bg-primary py-8">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-foreground font-bold">© 2025 Sparsh Mukthi. Empowering Education Through Innovation.</p>
+          <p className="text-foreground font-bold">© 2025 Dropout Detector. Empowering Education Through Innovation.</p>
         </div>
       </footer>
 

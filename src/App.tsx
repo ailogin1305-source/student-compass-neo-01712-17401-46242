@@ -12,6 +12,7 @@ import LoginPage from "./pages/LoginPage";
 import TrainingPage from "./pages/TrainingPage";
 import EducationalPracticesPage from "./pages/EducationalPracticesPage";
 import AdminPage from "./pages/AdminPage";
+import PDFAnalysis from "./pages/PDFAnalysis";
 
 const queryClient = new QueryClient();
 
@@ -24,28 +25,36 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<IntroHomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/training" element={<TrainingPage />} />
-                <Route path="/practices" element={<EducationalPracticesPage />} />
-                <Route 
-                  path="/admin" 
-                  element={
-                    <ProtectedRoute>
-                      <AdminPage />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/app/*" 
-                  element={
-                    <ProtectedRoute>
-                      <MainAppLayout />
-                    </ProtectedRoute>
-                  } 
-                />
-              </Routes>
+          <Routes>
+            <Route path="/" element={<IntroHomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/training" element={<TrainingPage />} />
+            <Route path="/practices" element={<EducationalPracticesPage />} />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute>
+                  <AdminPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/pdf-analysis" 
+              element={
+                <ProtectedRoute>
+                  <PDFAnalysis />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/app/*" 
+              element={
+                <ProtectedRoute>
+                  <MainAppLayout />
+                </ProtectedRoute>
+              } 
+            />
+          </Routes>
             </BrowserRouter>
           </DataProvider>
         </AuthProvider>
