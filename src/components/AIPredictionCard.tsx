@@ -5,6 +5,9 @@ import { Brain, TrendingUp, AlertTriangle, CheckCircle, Clock, Target } from "lu
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 interface AIPredictionCardProps {
   studentId: string;
@@ -38,7 +41,22 @@ interface PredictionResult {
 const AIPredictionCard = ({ studentId, studentData }: AIPredictionCardProps) => {
   const [prediction, setPrediction] = useState<PredictionResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showForm, setShowForm] = useState(true);
   const { toast } = useToast();
+
+  // Form state for all parameters
+  const [formData, setFormData] = useState({
+    cgpa: studentData?.cgpa || 7.0,
+    attendance_rate: studentData?.attendance_rate || 85,
+    past_failures: studentData?.past_failures || 0,
+    assignments_submitted: studentData?.assignments_submitted || 90,
+    sports_participation: studentData?.sports_participation || false,
+    extra_curricular: studentData?.extra_curricular || false,
+    scholarship: studentData?.scholarship || false,
+    total_activities: studentData?.total_activities || 3,
+    study_hours_per_week: studentData?.study_hours_per_week || 20,
+    projects_completed: studentData?.projects_completed || 5,
+  });
 
   const getRiskColor = (category: string) => {
     switch (category) {
@@ -62,22 +80,30 @@ const AIPredictionCard = ({ studentId, studentData }: AIPredictionCardProps) => 
   const runPrediction = async () => {
     setLoading(true);
     try {
+      console.log('Running prediction with data:', formData);
+      
       const { data, error } = await supabase.functions.invoke('predict-dropout', {
-        body: { student_id: studentId, student_data: studentData }
+        body: { student_data: formData }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw error;
+      }
 
+      console.log('Prediction result:', data);
       setPrediction(data);
+      setShowForm(false);
+      
       toast({
         title: "AI Analysis Complete",
-        description: `Risk Category: ${data.risk_category}`,
+        description: `Risk Category: ${data.risk_category} | Risk Score: ${data.risk_score}/100`,
       });
     } catch (error) {
       console.error('Prediction error:', error);
       toast({
         title: "Prediction Failed",
-        description: "Unable to generate AI prediction. Please try again.",
+        description: error instanceof Error ? error.message : "Unable to generate AI prediction. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -85,17 +111,140 @@ const AIPredictionCard = ({ studentId, studentData }: AIPredictionCardProps) => 
     }
   };
 
-  if (!prediction) {
+  if (showForm && !prediction) {
     return (
       <Card className="card-brutal bg-white p-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <div className="p-3 bg-primary rounded-none border-4 border-black">
               <Brain className="h-6 w-6" />
             </div>
             <div>
               <h3 className="text-xl font-bold uppercase">AI Dropout Prediction</h3>
-              <p className="text-sm text-muted-foreground">98.99% Accuracy Pattern Recognition</p>
+              <p className="text-sm text-muted-foreground">AutoGluon WeightedEnsemble_L2 | 98.99% AUC | 95.6% Accuracy</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4 mb-6">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="cgpa" className="font-bold uppercase text-xs">CGPA (0-10)</Label>
+              <Input
+                id="cgpa"
+                type="number"
+                step="0.1"
+                min="0"
+                max="10"
+                value={formData.cgpa}
+                onChange={(e) => setFormData({ ...formData, cgpa: parseFloat(e.target.value) })}
+                className="border-2 border-black"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="attendance" className="font-bold uppercase text-xs">Attendance Rate (%)</Label>
+              <Input
+                id="attendance"
+                type="number"
+                min="0"
+                max="100"
+                value={formData.attendance_rate}
+                onChange={(e) => setFormData({ ...formData, attendance_rate: parseFloat(e.target.value) })}
+                className="border-2 border-black"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="failures" className="font-bold uppercase text-xs">Past Failures</Label>
+              <Input
+                id="failures"
+                type="number"
+                min="0"
+                value={formData.past_failures}
+                onChange={(e) => setFormData({ ...formData, past_failures: parseInt(e.target.value) })}
+                className="border-2 border-black"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="assignments" className="font-bold uppercase text-xs">Assignments Submitted (%)</Label>
+              <Input
+                id="assignments"
+                type="number"
+                min="0"
+                max="100"
+                value={formData.assignments_submitted}
+                onChange={(e) => setFormData({ ...formData, assignments_submitted: parseInt(e.target.value) })}
+                className="border-2 border-black"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="study_hours" className="font-bold uppercase text-xs">Study Hours/Week</Label>
+              <Input
+                id="study_hours"
+                type="number"
+                min="0"
+                value={formData.study_hours_per_week}
+                onChange={(e) => setFormData({ ...formData, study_hours_per_week: parseFloat(e.target.value) })}
+                className="border-2 border-black"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="activities" className="font-bold uppercase text-xs">Total Activities</Label>
+              <Input
+                id="activities"
+                type="number"
+                min="0"
+                value={formData.total_activities}
+                onChange={(e) => setFormData({ ...formData, total_activities: parseInt(e.target.value) })}
+                className="border-2 border-black"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="projects" className="font-bold uppercase text-xs">Projects Completed</Label>
+              <Input
+                id="projects"
+                type="number"
+                min="0"
+                value={formData.projects_completed}
+                onChange={(e) => setFormData({ ...formData, projects_completed: parseInt(e.target.value) })}
+                className="border-2 border-black"
+              />
+            </div>
+          </div>
+
+          <div className="border-3 border-black p-4 bg-muted space-y-3">
+            <p className="font-bold uppercase text-xs mb-3">Engagement Factors</p>
+            
+            <div className="flex items-center justify-between">
+              <Label htmlFor="sports" className="font-bold text-sm">Sports Participation</Label>
+              <Switch
+                id="sports"
+                checked={formData.sports_participation}
+                onCheckedChange={(checked) => setFormData({ ...formData, sports_participation: checked })}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <Label htmlFor="extra" className="font-bold text-sm">Extra Curricular</Label>
+              <Switch
+                id="extra"
+                checked={formData.extra_curricular}
+                onCheckedChange={(checked) => setFormData({ ...formData, extra_curricular: checked })}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <Label htmlFor="scholarship" className="font-bold text-sm">Scholarship</Label>
+              <Switch
+                id="scholarship"
+                checked={formData.scholarship}
+                onCheckedChange={(checked) => setFormData({ ...formData, scholarship: checked })}
+              />
             </div>
           </div>
         </div>
@@ -106,7 +255,7 @@ const AIPredictionCard = ({ studentId, studentData }: AIPredictionCardProps) => 
           className="w-full"
           size="lg"
         >
-          {loading ? "Analyzing..." : "Run AI Analysis"}
+          {loading ? "Analyzing with AI Model..." : "Get Prediction"}
         </Button>
       </Card>
     );
@@ -145,23 +294,39 @@ const AIPredictionCard = ({ studentId, studentData }: AIPredictionCardProps) => 
           </p>
         </div>
 
-        <Button 
-          onClick={runPrediction} 
-          disabled={loading}
-          variant="outline"
-          className="w-full mt-4"
-        >
-          Refresh Analysis
-        </Button>
+        <div className="flex gap-2 mt-4">
+          <Button 
+            onClick={runPrediction} 
+            disabled={loading}
+            variant="outline"
+            className="flex-1"
+          >
+            Refresh Analysis
+          </Button>
+          <Button 
+            onClick={() => {
+              setShowForm(true);
+              setPrediction(null);
+            }}
+            variant="outline"
+            className="flex-1"
+          >
+            New Prediction
+          </Button>
+        </div>
       </Card>
 
-      {/* Feature Impacts */}
+      {/* Feature Impacts - XAI Explainability */}
       <Card className="card-brutal bg-white p-6">
         <div className="flex items-center gap-2 mb-4">
           <TrendingUp className="h-6 w-6" />
-          <h3 className="text-xl font-bold uppercase">Feature Impact Analysis</h3>
+          <h3 className="text-xl font-bold uppercase">XAI Feature Impact Analysis</h3>
         </div>
         
+        <p className="text-sm text-muted-foreground mb-4">
+          Explainable AI showing which features contribute most to the dropout risk prediction
+        </p>
+
         <div className="space-y-3">
           {prediction.feature_impacts.map((impact, idx) => (
             <div key={idx} className="border-3 border-black p-3 bg-muted">
@@ -214,12 +379,21 @@ const AIPredictionCard = ({ studentId, studentData }: AIPredictionCardProps) => 
         </Card>
       )}
 
-      {/* Model Info */}
+      {/* Model Info - Transparency */}
       <Card className="card-brutal bg-primary p-4">
-        <div className="flex items-center justify-between text-sm">
-          <span className="font-bold">Model: {prediction.model_info.name}</span>
-          <span>Training Data: {prediction.model_info.training_data}</span>
-          <span>AUC: {prediction.model_info.performance.auc}</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
+          <div>
+            <span className="font-bold uppercase text-xs">Model</span>
+            <p className="font-bold">{prediction.model_info.name}</p>
+          </div>
+          <div>
+            <span className="font-bold uppercase text-xs">Training Data</span>
+            <p className="font-bold">{prediction.model_info.training_data}</p>
+          </div>
+          <div>
+            <span className="font-bold uppercase text-xs">Performance</span>
+            <p className="font-bold">AUC: {prediction.model_info.performance.auc} | Acc: {(prediction.model_info.performance.accuracy * 100).toFixed(1)}%</p>
+          </div>
         </div>
       </Card>
     </div>
