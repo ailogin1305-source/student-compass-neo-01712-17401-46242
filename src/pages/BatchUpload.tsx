@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useData } from "@/contexts/DataContext";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import type { Student } from "@/types/database";
 
 const BatchUpload = () => {
   const { batchUploadStudents, riskDistribution } = useData();
@@ -104,7 +105,7 @@ const BatchUpload = () => {
         setProgress(Math.round((i / lines.length) * 100));
       }
 
-      const { error } = await supabase.from('students').insert(students);
+      const { error } = await supabase.from('students').insert(students as any[]);
       
       if (error) throw error;
 

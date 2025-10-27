@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Database, Users, TrendingUp, Upload } from "lucide-react";
+import type { Student } from "@/types/database";
 
 const AdminPage = () => {
   const { toast } = useToast();

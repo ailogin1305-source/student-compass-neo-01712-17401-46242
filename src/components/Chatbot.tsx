@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
+import type { Student, Intervention } from "@/types/database";
 
 interface Message {
   id: string;
@@ -57,8 +58,8 @@ const Chatbot = ({ isOpen, onClose }: ChatbotProps) => {
   const generateResponse = async (query: string) => {
     try {
       // Fetch context from database
-      const { data: students } = await supabase.from('students').select('*').limit(100);
-      const { data: interventions } = await supabase.from('interventions').select('*').limit(50);
+      const { data: students } = await supabase.from('students').select('*').limit(100) as { data: Student[] | null };
+      const { data: interventions } = await supabase.from('interventions').select('*').limit(50) as { data: Intervention[] | null };
       
       const context = {
         totalStudents: students?.length || 0,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Activity } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import type { Student } from "@/types/database";
 
 const RiskHeatmap = () => {
   const [heatmapData, setHeatmapData] = useState<any[]>([]);
@@ -13,7 +14,7 @@ const RiskHeatmap = () => {
   }, []);
 
   const loadHeatmapData = async () => {
-    const { data: students } = await supabase.from('students').select('*');
+    const { data: students } = await supabase.from('students').select('*') as { data: Student[] | null };
     
     if (students) {
       const heatmap = departments.map(dept => {

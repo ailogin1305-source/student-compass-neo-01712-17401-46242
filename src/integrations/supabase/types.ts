@@ -14,7 +14,195 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      analytics_events: {
+        Row: {
+          created_at: string | null
+          event_type: string
+          id: string
+          metadata: Json | null
+          student_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          event_type: string
+          id?: string
+          metadata?: Json | null
+          student_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          event_type?: string
+          id?: string
+          metadata?: Json | null
+          student_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analytics_events_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      interventions: {
+        Row: {
+          counselor: string | null
+          created_at: string | null
+          description: string | null
+          id: string
+          intervention_type: string
+          outcome: string | null
+          scheduled_date: string
+          status: string | null
+          student_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          counselor?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          intervention_type: string
+          outcome?: string | null
+          scheduled_date: string
+          status?: string | null
+          student_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          counselor?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          intervention_type?: string
+          outcome?: string | null
+          scheduled_date?: string
+          status?: string | null
+          student_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interventions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_notes: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          note_type: string | null
+          sentiment: string | null
+          student_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          note_type?: string | null
+          sentiment?: string | null
+          student_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          note_type?: string | null
+          sentiment?: string | null
+          student_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_notes_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      students: {
+        Row: {
+          age: number | null
+          assignments_submitted: number | null
+          attendance_rate: number | null
+          cgpa: number | null
+          created_at: string | null
+          department: string
+          dropout: boolean | null
+          extra_curricular: boolean | null
+          family_income: number | null
+          gender: string | null
+          id: string
+          parental_education: string | null
+          past_failures: number | null
+          projects_completed: number | null
+          risk_category: string | null
+          risk_score: number | null
+          scholarship: boolean | null
+          sports_participation: boolean | null
+          student_id: string
+          study_hours_per_week: number | null
+          total_activities: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          age?: number | null
+          assignments_submitted?: number | null
+          attendance_rate?: number | null
+          cgpa?: number | null
+          created_at?: string | null
+          department: string
+          dropout?: boolean | null
+          extra_curricular?: boolean | null
+          family_income?: number | null
+          gender?: string | null
+          id?: string
+          parental_education?: string | null
+          past_failures?: number | null
+          projects_completed?: number | null
+          risk_category?: string | null
+          risk_score?: number | null
+          scholarship?: boolean | null
+          sports_participation?: boolean | null
+          student_id: string
+          study_hours_per_week?: number | null
+          total_activities?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          age?: number | null
+          assignments_submitted?: number | null
+          attendance_rate?: number | null
+          cgpa?: number | null
+          created_at?: string | null
+          department?: string
+          dropout?: boolean | null
+          extra_curricular?: boolean | null
+          family_income?: number | null
+          gender?: string | null
+          id?: string
+          parental_education?: string | null
+          past_failures?: number | null
+          projects_completed?: number | null
+          risk_category?: string | null
+          risk_score?: number | null
+          scholarship?: boolean | null
+          sports_participation?: boolean | null
+          student_id?: string
+          study_hours_per_week?: number | null
+          total_activities?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
