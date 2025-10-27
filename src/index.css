@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Neobrutalism Color System - All HSL */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    /* Primary: Bright Cyan */
+    --primary: 191 100% 50%;
+    --primary-foreground: 0 0% 0%;
+
+    /* Secondary: Electric Yellow */
+    --secondary: 54 100% 50%;
+    --secondary-foreground: 0 0% 0%;
+
+    /* Risk Colors */
+    --risk-low: 132 100% 50%; /* Lime green */
+    --risk-medium: 28 100% 50%; /* Orange */
+    --risk-high: 347 100% 50%; /* Red */
+    --risk-critical: 0 100% 43%; /* Deep red */
+
+    /* Accent Colors */
+    --accent-pink: 306 100% 53%;
+    --accent-purple: 258 90% 66%;
+
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 191 100% 50%;
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 100% 43%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 0%;
+    --input: 0 0% 0%;
+    --ring: 191 100% 50%;
+
+    /* Neobrutalism: NO RADIUS */
+    --radius: 0;
+
+    /* Shadows */
+    --shadow-brutal: 8px 8px 0px hsl(0 0% 0%);
+    --shadow-brutal-sm: 4px 4px 0px hsl(0 0% 0%);
+    --shadow-brutal-lg: 12px 12px 0px hsl(0 0% 0%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Neobrutalism Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold uppercase tracking-tight;
+  }
+
+  /* Remove all border radius globally */
+  * {
+    border-radius: 0 !important;
+  }
+}
+
+@layer components {
+  /* Neobrutalism Button Styles */
+  .btn-brutal {
+    @apply relative border-4 border-black font-bold uppercase tracking-wide px-6 py-3 transition-all;
+    box-shadow: 6px 6px 0px black;
+  }
+  
+  .btn-brutal:hover {
+    box-shadow: 8px 8px 0px black;
+    transform: translate(-2px, -2px);
+  }
+  
+  .btn-brutal:active {
+    box-shadow: 2px 2px 0px black;
+    transform: translate(4px, 4px);
+  }
+
+  /* Card Styles */
+  .card-brutal {
+    @apply border-4 border-black p-6 bg-white;
+    box-shadow: var(--shadow-brutal);
+  }
+
+  .card-brutal:hover {
+    box-shadow: var(--shadow-brutal-lg);
+    transform: translate(-2px, -2px);
+  }
+
+  /* Risk Level Styles */
+  .risk-low {
+    @apply bg-[hsl(var(--risk-low))] text-black;
+  }
+
+  .risk-medium {
+    @apply bg-[hsl(var(--risk-medium))] text-black;
+  }
+
+  .risk-high {
+    @apply bg-[hsl(var(--risk-high))] text-white;
+  }
+
+  .risk-critical {
+    @apply bg-[hsl(var(--risk-critical))] text-white;
+    animation: pulse-brutal 2s infinite;
+  }
+
+  /* Animations */
+  @keyframes pulse-brutal {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes count-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-slide-in {
+    animation: slide-in-right 0.3s ease-out;
+  }
+
+  .animate-count-up {
+    animation: count-up 0.5s ease-out;
+  }
+}
