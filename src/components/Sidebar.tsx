@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, BarChart3, Calendar, Upload, X, LineChart } from "lucide-react";
+import { LayoutDashboard, Users, BarChart3, Calendar, Upload, X, LineChart, Brain } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -74,6 +74,18 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             >
               <LineChart className="h-5 w-5" />
               Data Analysis
+            </a>
+            
+            {/* Prediction External Link */}
+            <a
+              href="http://192.168.65.28:5000"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClose}
+              className="flex items-center gap-3 px-4 py-3 border-4 border-black font-bold uppercase text-sm transition-all bg-white hover:bg-muted"
+            >
+              <Brain className="h-5 w-5" />
+              Prediction
             </a>
           </nav>
         </div>
