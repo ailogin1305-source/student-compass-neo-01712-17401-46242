@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GraduationCap, ArrowLeft, Hand, Sparkles, Target } from "lucide-react";
+import GestureTrainingModule from "@/components/GestureTrainingModule";
 
 const TrainingPage = () => {
   return (
@@ -125,6 +126,11 @@ const TrainingPage = () => {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Interactive Gesture Training Module */}
+          <div className="mb-12">
+            <GestureTrainingModule />
           </div>
 
           <div className="text-center">
