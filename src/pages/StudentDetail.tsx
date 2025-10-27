@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Mail, Phone, AlertTriangle, TrendingUp, Target, Users, Network, Edit2, Save, X } from "lucide-react";
+import { ArrowLeft, Mail, Phone, AlertTriangle, TrendingUp, Target, Users, Network, Edit2, Save, X, Brain } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
@@ -11,6 +11,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, 
 import { useData } from "@/contexts/DataContext";
 import { type Student } from "@/data/mockData";
 import RiskGauge from "@/components/RiskGauge";
+import AIPredictionCard from "@/components/AIPredictionCard";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
@@ -306,8 +307,12 @@ const StudentDetail = () => {
 
         {/* Right Panel: Analysis Tabs */}
         <div className="lg:col-span-2">
-          <Tabs defaultValue="risk" className="w-full">
-            <TabsList className="grid w-full grid-cols-5 border-4 border-black bg-muted p-0 gap-0">
+          <Tabs defaultValue="ai" className="w-full">
+            <TabsList className="grid w-full grid-cols-6 border-4 border-black bg-muted p-0 gap-0">
+              <TabsTrigger value="ai" className="border-r-4 border-black data-[state=active]:bg-brutal-purple data-[state=active]:text-white">
+                <Brain className="mr-1 h-4 w-4" />
+                AI
+              </TabsTrigger>
               <TabsTrigger value="risk" className="border-r-4 border-black data-[state=active]:bg-primary">
                 Risk
               </TabsTrigger>
@@ -324,6 +329,11 @@ const StudentDetail = () => {
                 Network
               </TabsTrigger>
             </TabsList>
+
+            {/* AI Prediction Tab */}
+            <TabsContent value="ai" className="space-y-6 mt-6">
+              <AIPredictionCard studentId={student.student_id} />
+            </TabsContent>
 
             {/* Risk Analysis Tab */}
             <TabsContent value="risk" className="space-y-6 mt-6">
